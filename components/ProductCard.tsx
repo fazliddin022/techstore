@@ -1,13 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Star } from "lucide-react";
 import { Product } from "@/types";
+import { useCartStore } from "@/lib/store";
 
 type Props = {
   product: Product;
 };
 
 export default function ProductCard({ product }: Props) {
+  const addItem = useCartStore((state) => state.addItem);
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : null;
@@ -84,9 +88,23 @@ export default function ProductCard({ product }: Props) {
             )}
           </div>
 
-          <button className="bg-blue-600 text-white p-2.5 rounded-xl hover:bg-blue-700 active:scale-95 transition-all">
-            <ShoppingCart size={16} />
-          </button>
+          <button
+  onClick={() => addItem(product)}
+  style={{
+    background: "#2563eb",
+    color: "white",
+    padding: "0.625rem",
+    borderRadius: "0.75rem",
+    border: "none",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "all 0.2s",
+  }}
+>
+  <ShoppingCart size={16} />
+</button>
         </div>
       </div>
     </div>
