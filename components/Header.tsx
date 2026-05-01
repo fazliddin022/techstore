@@ -3,9 +3,15 @@
 import Link from "next/link";
 import { ShoppingCart, Zap, Search } from "lucide-react";
 import { useCartStore } from "@/lib/store";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const totalItems = useCartStore((state) => state.getTotalItems());
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header style={{
