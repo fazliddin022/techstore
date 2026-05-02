@@ -13,7 +13,9 @@ type Props = {
 export default function ProductCard({ product }: Props) {
   const addItem = useCartStore((state) => state.addItem);
   const discount = product.originalPrice
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100,
+      )
     : null;
 
   return (
@@ -31,13 +33,24 @@ export default function ProductCard({ product }: Props) {
 
         {/* Badge */}
         {product.badge && (
-          <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full ${
-            product.badge === "Sale"
-              ? "bg-red-500 text-white"
-              : product.badge === "New"
-              ? "bg-blue-500 text-white"
-              : "bg-amber-400 text-black"
-          }`}>
+          <span
+            style={{
+              position: "absolute",
+              top: "0.75rem",
+              left: "0.75rem",
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              padding: "0.25rem 0.625rem",
+              borderRadius: "999px",
+              background:
+                product.badge === "Sale"
+                  ? "#ef4444"
+                  : product.badge === "New"
+                    ? "#3b82f6"
+                    : "#fbbf24",
+              color: product.badge === "Popular" ? "#000" : "#fff",
+            }}
+          >
             {product.badge}
             {product.badge === "Sale" && discount && ` -${discount}%`}
           </span>
@@ -45,66 +58,112 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       {/* Ma'lumot qismi */}
-      <div className="p-4">
-        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
+      <div style={{ padding: "1rem" }}>
+        <p
+          style={{
+            fontSize: "0.75rem",
+            color: "#9ca3af",
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+            marginBottom: "0.25rem",
+          }}
+        >
           {product.brand}
         </p>
 
-        <Link href={`/products/${product.id}`}>
-          <h3 className="font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors line-clamp-1">
+        <Link
+          href={`/products/${product.id}`}
+          style={{ textDecoration: "none" }}
+        >
+          <h3
+            style={{
+              fontWeight: 600,
+              color: "#111827",
+              marginBottom: "0.5rem",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+            }}
+          >
             {product.name}
           </h3>
         </Link>
 
         {/* Rating */}
-        <div className="flex items-center gap-1.5 mb-3">
-          <div className="flex items-center gap-0.5">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.375rem",
+            marginBottom: "0.75rem",
+          }}
+        >
+          <div style={{ display: "flex", gap: "2px" }}>
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
                 size={12}
-                className={i < Math.floor(product.rating)
-                  ? "fill-amber-400 text-amber-400"
-                  : "text-gray-200 fill-gray-200"
-                }
+                style={{
+                  fill: i < Math.floor(product.rating) ? "#fbbf24" : "#e5e7eb",
+                  color: i < Math.floor(product.rating) ? "#fbbf24" : "#e5e7eb",
+                }}
               />
             ))}
           </div>
-          <span className="text-xs text-gray-400">
+          <span style={{ fontSize: "0.75rem", color: "#9ca3af" }}>
             {product.rating} ({product.reviewCount.toLocaleString()})
           </span>
         </div>
 
         {/* Narx va savat */}
-        <div className="flex items-center justify-between">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <div>
-            <span className="text-lg font-bold text-gray-900">
+            <span
+              style={{
+                fontSize: "1.125rem",
+                fontWeight: 700,
+                color: "#111827",
+              }}
+            >
               ${product.price.toLocaleString()}
             </span>
             {product.originalPrice && (
-              <span className="text-sm text-gray-400 line-through ml-2">
+              <span
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#9ca3af",
+                  textDecoration: "line-through",
+                  marginLeft: "0.5rem",
+                }}
+              >
                 ${product.originalPrice.toLocaleString()}
               </span>
             )}
           </div>
 
           <button
-  onClick={() => addItem(product)}
-  style={{
-    background: "#2563eb",
-    color: "white",
-    padding: "0.625rem",
-    borderRadius: "0.75rem",
-    border: "none",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    transition: "all 0.2s",
-  }}
->
-  <ShoppingCart size={16} />
-</button>
+            onClick={() => addItem(product)}
+            style={{
+              background: "#2563eb",
+              color: "white",
+              padding: "0.625rem",
+              borderRadius: "0.75rem",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "all 0.2s",
+            }}
+          >
+            <ShoppingCart size={16} />
+          </button>
         </div>
       </div>
     </div>

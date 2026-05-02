@@ -21,7 +21,7 @@ export const products: Product[] = [
     brand: "Samsung",
     category: "phone",
     price: 1199,
-    image: "https://images.unsplash.com/photo-1511707267537-b85faf00021e?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1705585174953-9b2aa8afc174?q=80&w=732&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 4.7,
     reviewCount: 1923,
     specs: ["Snapdragon 8 Gen 3", "200MP camera", "S Pen", "6.8\" display"],
